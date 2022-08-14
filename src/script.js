@@ -4,6 +4,9 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import * as dat from 'dat.gui'
 import gsap from 'gsap'
 
+// import texturePath from '../static/textures/icon-particle-texture.png'
+import texturePath from '../static/textures/particle-2.jpg'
+
 import './assets/scss/main.scss'
 
 // Misc helper functions
@@ -19,7 +22,7 @@ import {
 import vertex from '../static/shaders/vertex.glsl'
 import fragment from '../static/shaders/fragment.glsl'
 
-const texturePath = './textures/texture.jpg'
+// const texturePath = './textures/texture.jpg'
 
 export default class Sketch {
   constructor(options) {
@@ -75,14 +78,14 @@ export default class Sketch {
   }
 
   lerp(a, b, t) {
-    return a * (1 - t) + b
+    return a * (1 - t) + b * t
   }
 
   addParticles() {
     let self = this
     let count = 10000
     let min_radius = 0.5
-    let max_radius = 2
+    let max_radius = 1
     let particlegeo = new THREE.PlaneBufferGeometry(1,1)
     let geo = new THREE.InstancedBufferGeometry()
     geo.instanceCount = count
@@ -120,9 +123,12 @@ export default class Sketch {
       },
       side: THREE.DoubleSide,
       uniforms: {
+        uTexture: { value: self.textureLoader.load( texturePath ) },
         time: { value: 0},
         resolution: { value: new THREE.Vector4() }
       },
+      transparent: true,
+      depthTest: false,
       vertexShader: vertex,
       fragmentShader: fragment
     })
@@ -279,60 +285,6 @@ export default class Sketch {
 
     this.renderer.render(this.scene, this.camera);
     requestAnimationFrame(this.render.bind(this))
-  }
-
-  addOWavePlane() {
-    let self = this
-
-    const envmap = new THREE.CubeTextureLoader()
-      .setPath( 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/2666677/' )
-      .load( [
-        'skybox2_px.jpg',
-        'skybox2_nx.jpg',
-        'skybox2_py.jpg',
-        'skybox2_ny.jpg',
-        'skybox2_pz.jpg',
-        'skybox2_nz.jpg'
-      ] );
-    // self.scene.background = envmap;
-
-    // const geometry = new THREE.PlaneBufferGeometry( 30, 30, 100, 100 );
-    const geometry = new THREE.PlaneBufferGeometry( 1, 1, 100, 100 );
-    const material = new THREE.MeshStandardMaterial({ 
-      color: 0x00aaff, 
-      envMap: envmap,
-      metalness: 0.9, 
-      roughness: 0.1,
-    });
-    material.onBeforeCompile = (shader) => {
-        shader.uniforms.time = { value: 0}
-        shader.vertexShader = `
-            uniform float time;
-        ` + shader.vertexShader
-
-        const token = '#include <begin_vertex>'
-        const customTransform = `
-            vec3 transformed = vec3(position);
-            float freq = length(transformed.xy);
-            float amp = 0.04;
-            float angle = -time*2.0 + freq*3.0;
-            transformed.z += sin(angle)*amp;
-
-            objectNormal = normalize(vec3(0.0, amp * freq * cos(angle), 1.0));
-            vNormal = normalMatrix * objectNormal;
-        `
-        shader.vertexShader = shader.vertexShader.replace(token,customTransform)
-        // matShader = shader
-    }
-    const mesh = new THREE.Mesh( geometry, material );
-    // mesh.rotateX( -Math.PI/2.5 );
-    // mesh.position.y = 0.3;
-
-    mesh.scale.set(300, 300, 1)
-    // this.scene.add( this.mesh );
-    // mesh.position.x = 300
-
-    self.scene.add(mesh);
   }
 
 }

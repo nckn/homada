@@ -18,7 +18,8 @@ void main() {
 
   // Add position
   vec4 view_pos = viewMatrix * vec4(particle_position, 1.0);
-  view_pos.xyz += position * 0.003;
+  // view_pos.xyz += position * 0.003; // small
+  view_pos.xyz += position * 0.008; // medium
 
   // gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(finalpos, 1.0);
   gl_Position = projectionMatrix * view_pos;
