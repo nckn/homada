@@ -30,7 +30,8 @@ export default class Sketch {
     this.distanceCam = 1
 
     this.camera = new THREE.PerspectiveCamera(30, this.width / this.height, 0.001, 10000);
-    this.camera.position.z = this.distanceCam;
+    // this.camera.position.z = this.distanceCam;
+    this.camera.position.set(0, 2, 2)
 
     // this.camera.fov = 2 * Math.atan((this.height / 2) / this.distanceCam) * 180 / Math.PI;
     this.imagesAdded = 0;
@@ -85,9 +86,9 @@ export default class Sketch {
     let pos = new Float32Array(count * 3)
 
     for (let i = 0; i < count; i++) {
-      let x = Math.random() * 0.5
-      let y = Math.random() * 0.5
-      let z = Math.random() * 0.5
+      let x = (Math.random()-0.5) * 0.5
+      let y = (Math.random()-0.5) * 0.5
+      let z = (Math.random()-0.5) * 0.5
       
       pos.set([
         x, y, z
@@ -98,7 +99,7 @@ export default class Sketch {
 
     geo.setAttribute('pos', new THREE.InstancedBufferAttribute(pos, 3, false))
 
-    this.material = new THREE.ShaderMaterial({
+    this.material = new THREE.ShaderMaterial({ 
       extensions: {
         derivatives: '#extension GL_OES_standard_derivatives : enable'
       },
@@ -113,7 +114,7 @@ export default class Sketch {
 
     this.geometry = new THREE.PlaneGeometry(1, 1, 1, 1);
 
-    this.points = new THREE.Mesh(this.geometry, this.material)
+    this.points = new THREE.Mesh(geo, this.material)
 
     this.scene.add(this.points)
     // this.mesh.position.x = 300
