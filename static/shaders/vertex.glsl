@@ -8,5 +8,8 @@ attribute vec3 pos;
 void main() {
   vUv = uv;
   vec3 finalpos = pos + position * 0.1;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(finalpos, 1.0);
+
+  vec4 view_pos = modelMatrix * vec4(pos, 1.0);
+
+  gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(finalpos, 1.0);
 }

@@ -86,9 +86,9 @@ export default class Sketch {
     let pos = new Float32Array(count * 3)
 
     for (let i = 0; i < count; i++) {
-      let x = (Math.random()-0.5) * 0.5
-      let y = (Math.random()-0.5) * 0.5
-      let z = (Math.random()-0.5) * 0.5
+      let x = (Math.random()-0.5) * 5.5
+      let y = (Math.random()-0.5) * 5.5
+      let z = (Math.random()-0.5) * 5.5
       
       pos.set([
         x, y, z
