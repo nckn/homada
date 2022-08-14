@@ -29,8 +29,9 @@ export default class Sketch {
     this.container = options.domElement;
     this.width = this.container.offsetWidth;
     this.height = this.container.offsetHeight;
-
+    this.count = 10000
     this.distanceCam = 1
+
 
     this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.001, 10000);
     // this.camera.position.z = this.distanceCam;
@@ -75,26 +76,46 @@ export default class Sketch {
 
     this.addEventListeners()
 
+    setTimeout(_ => {
+      this.shakeThingsUp()
+    }, 5000)
+
   }
 
   lerp(a, b, t) {
     return a * (1 - t) + b * t
   }
 
+  shakeThingsUp() {
+    let self = this
+    for (let i = 0; i < self.count; i++) {
+
+      // Random
+      let x = (Math.random()-0.5) * 5.5
+      let y = (Math.random()-0.5) * 5.5
+      let z = (Math.random()-0.5) * 5.5
+      
+      self.pos.set([
+        x, y, z
+      ],i*3)
+    }
+
+    self.geo.setAttribute('pos', new THREE.InstancedBufferAttribute(self.pos, 3, false))
+  }
+
   addParticles() {
     let self = this
-    let count = 10000
     let min_radius = 0.5
     let max_radius = 1
     let particlegeo = new THREE.PlaneBufferGeometry(1,1)
-    let geo = new THREE.InstancedBufferGeometry()
-    geo.instanceCount = count
-    geo.setAttribute('position', particlegeo.getAttribute('position'))
-    geo.index = particlegeo.index
+    self.geo = new THREE.InstancedBufferGeometry()
+    self.geo.instanceCount = self.count
+    self.geo.setAttribute('position', particlegeo.getAttribute('position'))
+    self.geo.index = particlegeo.index
 
-    let pos = new Float32Array(count * 3)
+    self.pos = new Float32Array(self.count * 3)
 
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < self.count; i++) {
       let theta = Math.random() * 2 * Math.PI
 
       // Disc
@@ -108,14 +129,14 @@ export default class Sketch {
       // let y = (Math.random()-0.5) * 5.5
       // let z = (Math.random()-0.5) * 5.5
       
-      pos.set([
+      self.pos.set([
         x, y, z
       ],i*3)
     }
 
-    console.log(geo.getAttribute('position'))
+    // console.log(self.geo.getAttribute('position'))
 
-    geo.setAttribute('pos', new THREE.InstancedBufferAttribute(pos, 3, false))
+    self.geo.setAttribute('pos', new THREE.InstancedBufferAttribute(self.pos, 3, false))
 
     this.material = new THREE.ShaderMaterial({ 
       extensions: {
@@ -135,7 +156,7 @@ export default class Sketch {
 
     this.geometry = new THREE.PlaneGeometry(1, 1, 1, 1);
 
-    this.points = new THREE.Mesh(geo, this.material)
+    this.points = new THREE.Mesh(self.geo, this.material)
 
     this.scene.add(this.points)
     // this.mesh.position.x = 300
