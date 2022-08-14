@@ -74,9 +74,15 @@ export default class Sketch {
 
   }
 
+  lerp(a, b, t) {
+    return a * (1 - t) + b
+  }
+
   addParticles() {
     let self = this
     let count = 10000
+    let min_radius = 0.5
+    let max_radius = 2
     let particlegeo = new THREE.PlaneBufferGeometry(1,1)
     let geo = new THREE.InstancedBufferGeometry()
     geo.instanceCount = count
@@ -86,9 +92,18 @@ export default class Sketch {
     let pos = new Float32Array(count * 3)
 
     for (let i = 0; i < count; i++) {
-      let x = (Math.random()-0.5) * 5.5
-      let y = (Math.random()-0.5) * 5.5
-      let z = (Math.random()-0.5) * 5.5
+      let theta = Math.random() * 2 * Math.PI
+
+      // Disc
+      let r = self.lerp(min_radius, max_radius, Math.random())
+      let x = r * Math.sin(theta)
+      let y = (Math.random()-0.5) * 0.05
+      let z = r * Math.cos(theta)
+
+      // Random
+      // let x = (Math.random()-0.5) * 5.5
+      // let y = (Math.random()-0.5) * 5.5
+      // let z = (Math.random()-0.5) * 5.5
       
       pos.set([
         x, y, z

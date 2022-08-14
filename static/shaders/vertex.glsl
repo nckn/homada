@@ -6,7 +6,8 @@ float PI = 3.141592653589793238;
 attribute vec3 pos;
 
 void main() {
-  vUv = uv;
+  // vUv = uv;
+  vUv = position.xy + vec2(0.5);
   vec3 finalpos = pos + position * 0.1;
 
   // vec4 view_pos = modelMatrix * vec4(pos, 1.0);
@@ -17,7 +18,7 @@ void main() {
 
   // Add position
   vec4 view_pos = viewMatrix * vec4(particle_position, 1.0);
-  view_pos.xyz += position * 0.01;
+  view_pos.xyz += position * 0.003;
 
   // gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(finalpos, 1.0);
   gl_Position = projectionMatrix * view_pos;
