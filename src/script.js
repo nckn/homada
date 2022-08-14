@@ -29,7 +29,7 @@ export default class Sketch {
 
     this.distanceCam = 1
 
-    this.camera = new THREE.PerspectiveCamera(30, this.width / this.height, 0.001, 10000);
+    this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.001, 10000);
     // this.camera.position.z = this.distanceCam;
     this.camera.position.set(0, 2, 2)
 

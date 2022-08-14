@@ -9,7 +9,16 @@ void main() {
   vUv = uv;
   vec3 finalpos = pos + position * 0.1;
 
-  vec4 view_pos = modelMatrix * vec4(pos, 1.0);
+  // vec4 view_pos = modelMatrix * vec4(pos, 1.0);
+  
+  vec3 particle_position = (modelMatrix * vec4(pos, 1.0)).xyz;
 
-  gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(finalpos, 1.0);
+  // calc global position
+
+  // Add position
+  vec4 view_pos = viewMatrix * vec4(particle_position, 1.0);
+  view_pos.xyz += position * 0.01;
+
+  // gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(finalpos, 1.0);
+  gl_Position = projectionMatrix * view_pos;
 }
