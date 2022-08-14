@@ -14,8 +14,10 @@ import {
   noise
 } from '../static/js/helpers.js'
 
-import vertexShader from '../static/shaders/template/vertexShader.glsl'
-import fragmentShader from '../static/shaders/template/fragmentShader.glsl'
+// import vertexShader from '../static/shaders/template/vertexShader.glsl'
+// import fragmentShader from '../static/shaders/template/fragmentShader.glsl'
+import vertex from '../static/shaders/vertex.glsl'
+import fragment from '../static/shaders/fragment.glsl'
 
 const texturePath = './textures/texture.jpg'
 
@@ -25,10 +27,12 @@ export default class Sketch {
     this.width = this.container.offsetWidth;
     this.height = this.container.offsetHeight;
 
-    this.camera = new THREE.PerspectiveCamera(30, this.width / this.height, 0.001, 10000);
-    this.camera.position.z = 600;
+    this.distanceCam = 1
 
-    this.camera.fov = 2 * Math.atan((this.height / 2) / 600) * 180 / Math.PI;
+    this.camera = new THREE.PerspectiveCamera(30, this.width / this.height, 0.001, 10000);
+    this.camera.position.z = this.distanceCam;
+
+    // this.camera.fov = 2 * Math.atan((this.height / 2) / this.distanceCam) * 180 / Math.PI;
     this.imagesAdded = 0;
 
     this.scene = new THREE.Scene();
@@ -54,7 +58,9 @@ export default class Sketch {
 
     this.setupTextureLoader()
 
-    this.addObjects()
+    // this.addObjects()
+    
+    this.addParticles()
     
     // this.addOWavePlane()
 
@@ -64,6 +70,53 @@ export default class Sketch {
     this.render();
 
     this.addEventListeners()
+
+  }
+
+  addParticles() {
+    let self = this
+    let count = 10000
+    let particlegeo = new THREE.PlaneBufferGeometry(1,1)
+    let geo = new THREE.InstancedBufferGeometry()
+    geo.instanceCount = count
+    geo.setAttribute('position', particlegeo.getAttribute('position'))
+    geo.index = particlegeo.index
+
+    let pos = new Float32Array(count * 3)
+
+    for (let i = 0; i < count; i++) {
+      let x = Math.random() * 0.5
+      let y = Math.random() * 0.5
+      let z = Math.random() * 0.5
+      
+      pos.set([
+        x, y, z
+      ],i*3)
+    }
+
+    console.log(geo.getAttribute('position'))
+
+    geo.setAttribute('pos', new THREE.InstancedBufferAttribute(pos, 3, false))
+
+    this.material = new THREE.ShaderMaterial({
+      extensions: {
+        derivatives: '#extension GL_OES_standard_derivatives : enable'
+      },
+      side: THREE.DoubleSide,
+      uniforms: {
+        time: { value: 0},
+        resolution: { value: new THREE.Vector4() }
+      },
+      vertexShader: vertex,
+      fragmentShader: fragment
+    })
+
+    this.geometry = new THREE.PlaneGeometry(1, 1, 1, 1);
+
+    this.points = new THREE.Mesh(this.geometry, this.material)
+
+    this.scene.add(this.points)
+    // this.mesh.position.x = 300
 
   }
 
@@ -98,9 +151,9 @@ export default class Sketch {
 
     // resize plane
     // self.setMaterial()
-    this.material.uniforms.uResolution.value = new THREE.Vector2(this.width, this.height)
-    this.material.uniforms.uQuadSize.value = new THREE.Vector2(300, 300 * ( self.height / self.width ))
-    this.material.uniforms.aspectRatio.value = self.height / self.width
+    // this.material.uniforms.uResolution.value = new THREE.Vector2(this.width, this.height)
+    // this.material.uniforms.uQuadSize.value = new THREE.Vector2(300, 300 * ( self.height / self.width ))
+    // this.material.uniforms.aspectRatio.value = self.height / self.width
 
     this.camera.fov = 2 * Math.atan((this.height / 2) / 600) * 180 / Math.PI;
   }
@@ -201,11 +254,11 @@ export default class Sketch {
     
     // mousePos[0] = x;
     // mousePos[1] = canvas.height - y - 1;
-    this.material.uniforms.uMouse.value = new THREE.Vector2(
-      x,
-      y
-      // mousePos[1]
-    )
+    // this.material.uniforms.uMouse.value = new THREE.Vector2(
+    //   x,
+    //   y
+    //   // mousePos[1]
+    // )
     // this.material.uniforms.uMouse.value = map(x, 0, window.innerWidth, 0, 5);
 
     this.renderer.render(this.scene, this.camera);
