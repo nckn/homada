@@ -101,6 +101,9 @@ export default class Sketch {
     }
 
     self.geo.setAttribute('pos', new THREE.InstancedBufferAttribute(self.pos, 3, false))
+
+    console.log('self.geo')
+    console.log(self.geo.attributes.pos)
   }
 
   addParticles() {
