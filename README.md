@@ -22,3 +22,24 @@ https://codepen.io/soju22/pen/eYmaPOK?editors=0010
 
 Black hole
 https://codepen.io/darrylhuffman/pen/gRZrpv
+
+
+https://gist.github.com/akella
+
+
+TODOs
+- add intro animation / preloader
+- add text tween
+- camera circling
+- change formations, 3D cube, 2D cube, torus, random, etc.
+- style text and buttons
+- typography: Instagram research
+
+- compare people side-by-side
+- compare to Nick Cave
+
+- show meta info, years
+
+- slot machine, iOS date picker roller 
+
+- tooltip, show what day number it is, and date

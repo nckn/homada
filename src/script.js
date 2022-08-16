@@ -55,7 +55,7 @@ export default class Sketch {
     this.container.appendChild(this.renderer.domElement);
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.addEventListener('change', _ => {
-      console.log('orbit controls')
+      // console.log('orbit controls')
     })
     this.materials = [];
 
@@ -130,10 +130,27 @@ export default class Sketch {
     console.log('this.birthday: ', this.birthday)
 
     document.getElementById('result-days').innerHTML = this.differenceInDays
+
+    this.resetParticles()
   }
 
   lerp(a, b, t) {
     return a * (1 - t) + b * t
+  }
+
+  resetParticles() {
+    let self = this
+
+    // Set the count
+    this.count = this.differenceInDays
+
+    // Flush the scene
+    while (self.scene.children.length > 0){
+      console.log('before destroying: ', self.scene.children[0])
+      self.scene.remove(self.scene.children[0]);
+    }
+
+    this.addParticles()
   }
 
   shakeThingsUp() {
