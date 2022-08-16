@@ -128,6 +128,8 @@ export default class Sketch {
     
     console.log('this.today: ', this.today)
     console.log('this.birthday: ', this.birthday)
+
+    document.getElementById('result-days').innerHTML = this.differenceInDays
   }
 
   lerp(a, b, t) {
