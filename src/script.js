@@ -95,8 +95,8 @@ export default class Sketch {
     let valueDay = document.getElementById('dd').value
     let valueMonth = document.getElementById('mm').value
     let valueYear = document.getElementById('yy').value
-    let birthday = valueDay + '-' + valueMonth + '-' + valueYear
-    this.birthdayDate = new Date(birthday)
+    this.birthday = valueMonth + '-' + valueDay + '-' + valueYear
+    this.birthdayDate = new Date(this.birthday)
     console.log('submit')
 
     console.log('birthdayDate: ', this.birthdayDate)
@@ -111,7 +111,8 @@ export default class Sketch {
   getTodaysDate() {
     this.today = new Date()
     let dd = this.today.getDate()
-    let mm = this.today.getMonth() + 1
+    // let mm = this.today.getMonth() + 1
+    let mm = this.today.getMonth()
     let yy = this.today.getFullYear()
     this.todayDate = dd + '-' + mm + '-' + yy
     console.log('todayDate: ', this.todayDate)
@@ -124,6 +125,9 @@ export default class Sketch {
     // To calculate the no. of days between two dates
     this.differenceInDays = Math.floor(Difference_In_Time / (1000 * 3600 * 24));
     console.log('getDifferenceInDays: ', this.differenceInDays)
+    
+    console.log('this.today: ', this.today)
+    console.log('this.birthday: ', this.birthday)
   }
 
   lerp(a, b, t) {
