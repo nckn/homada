@@ -100,10 +100,15 @@ export default class Sketch {
       ],i*3)
     }
 
-    self.geo.setAttribute('pos', new THREE.InstancedBufferAttribute(self.pos, 3, false))
+    // self.geo.setAttribute('pos', new THREE.InstancedBufferAttribute(self.pos, 3, false))
+
+    // gsap.to(self.geo, { attr: { ["pos"]: new THREE.InstancedBufferAttribute(self.pos, 3, false) }});
+    // gsap.to(self.geo.pos, {
+    //   x: self.pos.x
+    // })
 
     console.log('self.geo')
-    console.log(self.geo.attributes.pos)
+    console.log(self.geo.attributes.pos.array)
   }
 
   addParticles() {
