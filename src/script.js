@@ -126,13 +126,19 @@ export default class Sketch {
     for (let i = 0; i < self.count; i++) {
       let theta = Math.random() * 2 * Math.PI
 
+      // Cube
+      // let r = self.lerp(min_radius, max_radius, Math.random())
+      // let x = r * Math.sin(theta)
+      // let y = (Math.random()-0.5) * 0.05
+      // let z = r * Math.cos(theta)
+
       // Disc
       let r = self.lerp(min_radius, max_radius, Math.random())
       let x = r * Math.sin(theta)
       let y = (Math.random()-0.5) * 0.05
       let z = r * Math.cos(theta)
 
-      // Random
+      // // Random
       // let x = (Math.random()-0.5) * 5.5
       // let y = (Math.random()-0.5) * 5.5
       // let z = (Math.random()-0.5) * 5.5
@@ -174,6 +180,16 @@ export default class Sketch {
   addEventListeners() {
     let self = this
     document.addEventListener('mousemove', self.onMouseMove.bind(this))
+
+    document.getElementById('tell-me').addEventListener('submit', this.onSubmit.bind(this))
+    // document.getElementById('submit-btn').addEventListener('click', this.onSubmit.bind(this))
+  }
+
+  onSubmit(e) {
+    e.preventDefault()
+    e.stopPropagation()
+
+    console.log('submit')
   }
 
   setupTextureLoader() {
