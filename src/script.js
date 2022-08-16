@@ -76,10 +76,21 @@ export default class Sketch {
 
     this.addEventListeners()
 
+    this.getTodaysDate()
+
     setTimeout(_ => {
       this.shakeThingsUp()
     }, 5000)
 
+  }
+
+  getTodaysDate() {
+    let today = new Date()
+    let dd = today.getDate()
+    let mm = today.getMonth() + 1
+    let yy = today.getFullYear()
+    let todayDate = dd + '-' + mm + '-' + yy
+    console.log('todayDate: ', todayDate)
   }
 
   lerp(a, b, t) {
@@ -189,7 +200,18 @@ export default class Sketch {
     e.preventDefault()
     e.stopPropagation()
 
+    let valueDay = document.getElementById('dd').value
+    let valueMonth = document.getElementById('mm').value
+    let valueYear = document.getElementById('yy').value
+    let birthday = valueDay + '-' + valueMonth + '-' + valueYear
+    let birthdayDate = new Date(birthday)
     console.log('submit')
+    
+    console.log('birthdayDate: ', birthdayDate)
+
+    // console.log('valueDay: ', valueDay)
+    // console.log('valueMonth: ', valueMonth)
+    // console.log('valueYear: ', valueYear)
   }
 
   setupTextureLoader() {
