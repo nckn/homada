@@ -32,6 +32,10 @@ export default class Sketch {
     this.count = 10000
     this.distanceCam = 1
 
+    this.today = ''
+    this.todayDate = ''
+    this.birthdayDate = ''
+    this.differenceInDays = ''
 
     this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.001, 10000);
     // this.camera.position.z = this.distanceCam;
@@ -57,16 +61,16 @@ export default class Sketch {
 
     this.time = 0;
 
-    this.mouse = {x: 0, y: 0}
-    
+    this.mouse = { x: 0, y: 0 }
+
     this.setupSettings()
 
     this.setupTextureLoader()
 
     // this.addObjects()
-    
+
     this.addParticles()
-    
+
     // this.addOWavePlane()
 
     this.setupResize()
@@ -84,13 +88,42 @@ export default class Sketch {
 
   }
 
+  onSubmit(e) {
+    e.preventDefault()
+    e.stopPropagation()
+
+    let valueDay = document.getElementById('dd').value
+    let valueMonth = document.getElementById('mm').value
+    let valueYear = document.getElementById('yy').value
+    let birthday = valueDay + '-' + valueMonth + '-' + valueYear
+    this.birthdayDate = new Date(birthday)
+    console.log('submit')
+
+    console.log('birthdayDate: ', this.birthdayDate)
+
+    this.getDifferenceInDays()
+
+    // console.log('valueDay: ', valueDay)
+    // console.log('valueMonth: ', valueMonth)
+    // console.log('valueYear: ', valueYear)
+  }
+
   getTodaysDate() {
-    let today = new Date()
-    let dd = today.getDate()
-    let mm = today.getMonth() + 1
-    let yy = today.getFullYear()
-    let todayDate = dd + '-' + mm + '-' + yy
-    console.log('todayDate: ', todayDate)
+    this.today = new Date()
+    let dd = this.today.getDate()
+    let mm = this.today.getMonth() + 1
+    let yy = this.today.getFullYear()
+    this.todayDate = dd + '-' + mm + '-' + yy
+    console.log('todayDate: ', this.todayDate)
+  }
+
+  getDifferenceInDays() {
+    // To calculate the time difference of two dates
+    // var Difference_In_Time = this.todayDate.getTime() - this.birthdayDate.getTime(); // not working
+    var Difference_In_Time = this.today.getTime() - this.birthdayDate.getTime();
+    // To calculate the no. of days between two dates
+    this.differenceInDays = Math.floor(Difference_In_Time / (1000 * 3600 * 24));
+    console.log('getDifferenceInDays: ', this.differenceInDays)
   }
 
   lerp(a, b, t) {
@@ -102,13 +135,13 @@ export default class Sketch {
     for (let i = 0; i < self.count; i++) {
 
       // Random
-      let x = (Math.random()-0.5) * 5.5
-      let y = (Math.random()-0.5) * 5.5
-      let z = (Math.random()-0.5) * 5.5
-      
+      let x = (Math.random() - 0.5) * 5.5
+      let y = (Math.random() - 0.5) * 5.5
+      let z = (Math.random() - 0.5) * 5.5
+
       self.pos.set([
         x, y, z
-      ],i*3)
+      ], i * 3)
     }
 
     // self.geo.setAttribute('pos', new THREE.InstancedBufferAttribute(self.pos, 3, false))
@@ -126,7 +159,7 @@ export default class Sketch {
     let self = this
     let min_radius = 0.5
     let max_radius = 1
-    let particlegeo = new THREE.PlaneBufferGeometry(1,1)
+    let particlegeo = new THREE.PlaneBufferGeometry(1, 1)
     self.geo = new THREE.InstancedBufferGeometry()
     self.geo.instanceCount = self.count
     self.geo.setAttribute('position', particlegeo.getAttribute('position'))
@@ -146,31 +179,31 @@ export default class Sketch {
       // Disc
       let r = self.lerp(min_radius, max_radius, Math.random())
       let x = r * Math.sin(theta)
-      let y = (Math.random()-0.5) * 0.05
+      let y = (Math.random() - 0.5) * 0.05
       let z = r * Math.cos(theta)
 
       // // Random
       // let x = (Math.random()-0.5) * 5.5
       // let y = (Math.random()-0.5) * 5.5
       // let z = (Math.random()-0.5) * 5.5
-      
+
       self.pos.set([
         x, y, z
-      ],i*3)
+      ], i * 3)
     }
 
     // console.log(self.geo.getAttribute('position'))
 
     self.geo.setAttribute('pos', new THREE.InstancedBufferAttribute(self.pos, 3, false))
 
-    this.material = new THREE.ShaderMaterial({ 
+    this.material = new THREE.ShaderMaterial({
       extensions: {
         derivatives: '#extension GL_OES_standard_derivatives : enable'
       },
       side: THREE.DoubleSide,
       uniforms: {
-        uTexture: { value: self.textureLoader.load( texturePath ) },
-        time: { value: 0},
+        uTexture: { value: self.textureLoader.load(texturePath) },
+        time: { value: 0 },
         resolution: { value: new THREE.Vector4() }
       },
       transparent: true,
@@ -196,29 +229,11 @@ export default class Sketch {
     // document.getElementById('submit-btn').addEventListener('click', this.onSubmit.bind(this))
   }
 
-  onSubmit(e) {
-    e.preventDefault()
-    e.stopPropagation()
-
-    let valueDay = document.getElementById('dd').value
-    let valueMonth = document.getElementById('mm').value
-    let valueYear = document.getElementById('yy').value
-    let birthday = valueDay + '-' + valueMonth + '-' + valueYear
-    let birthdayDate = new Date(birthday)
-    console.log('submit')
-    
-    console.log('birthdayDate: ', birthdayDate)
-
-    // console.log('valueDay: ', valueDay)
-    // console.log('valueMonth: ', valueMonth)
-    // console.log('valueYear: ', valueYear)
-  }
-
   setupTextureLoader() {
     let self = this
     /* Textures */
     self.textureLoader = new THREE.TextureLoader()
-    self.texture = self.textureLoader.load( texturePath )
+    self.texture = self.textureLoader.load(texturePath)
     self.texture.needsUpdate = true;
   }
 
@@ -257,7 +272,7 @@ export default class Sketch {
       // wireframe: true,
       uniforms: {
         time: { value: 1.0 },
-        uMouse: { value: new THREE.Vector2(1,1) },
+        uMouse: { value: new THREE.Vector2(1, 1) },
         uOffset: {
           value: new THREE.Vector2(0.0, 0.0)
         },
@@ -268,7 +283,7 @@ export default class Sketch {
         uTextureSize: { value: new THREE.Vector2(100, 100) },
         uCorners: { value: new THREE.Vector4(0, 0, 0, 0) },
         uResolution: { value: new THREE.Vector2(this.width, this.height) },
-        uQuadSize: { value: new THREE.Vector2(300, 300 * ( self.height / self.width )) },
+        uQuadSize: { value: new THREE.Vector2(300, 300 * (self.height / self.width)) },
         aspectRatio: { value: self.height / self.width },
       },
       vertexShader: vertexShader,
@@ -285,7 +300,7 @@ export default class Sketch {
 
     this.mesh = new THREE.Mesh(this.geometry, this.material);
     this.mesh.scale.set(300, 300, 1)
-    this.scene.add( this.mesh );
+    this.scene.add(this.mesh);
     // this.mesh.position.x = 300
 
   }
@@ -308,12 +323,12 @@ export default class Sketch {
 
     // self.mouse.x = (event.clientX / window.innerWidth) * 1
     // self.mouse.y = -(event.clientY / window.innerHeight) * 1
-    
+
     const eX = (event.touches) ? event.touches[0].clientX : event.clientX;
     const eY = (event.touches) ? event.touches[0].clientY : event.clientY;
     self.mouse.x = (eX / window.innerWidth) * 1
     self.mouse.y = -(eY / window.innerHeight) * 1
-    console.log('x: ', self.mouse.x, 'y: ', self.mouse.y)
+    // console.log('x: ', self.mouse.x, 'y: ', self.mouse.y)
   }
 
   render() {
@@ -324,7 +339,7 @@ export default class Sketch {
     // this.material.uniforms.uProgress.value = this.settings.progress;
 
     // this.setPosition()
-    
+
     // Update mouse position
     // this.material.uniforms.uMouse.value = map(x, 0, window.innerWidth, 0, 5);
     // this.material.uniforms.uMouse.value = new THREE.Vector2(
@@ -337,10 +352,10 @@ export default class Sketch {
 
     // const x = (self.clientX) * canvas.width / rect.width;
     // const y = (self.clientY - rect.top)  * canvas.height / rect.height;
-    
+
     const x = self.mouse.x
     const y = self.mouse.y + 1
-    
+
     // mousePos[0] = x;
     // mousePos[1] = canvas.height - y - 1;
     // this.material.uniforms.uMouse.value = new THREE.Vector2(
