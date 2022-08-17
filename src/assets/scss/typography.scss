@@ -1,5 +1,17 @@
+
+
+
+h1, h2 {
+  font-family: 'OutfitBold', sans-serif;
+}
+
 h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.35;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
 }
 
 h3 {
@@ -8,4 +20,12 @@ h3 {
 
 p {
   font-size: 1rem;
+}
+
+select, input, button, textarea {
+  font-family: 'OutfitRegular', sans-serif;
+}
+
+legend p {
+  font-size: 1.5rem;
 }

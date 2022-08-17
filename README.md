@@ -32,7 +32,6 @@ TODOs
 - add text tween
 - camera circling
 - change formations, 3D cube, 2D cube, torus, random, etc.
-- style text and buttons
 - typography: Instagram research
 
 - compare people side-by-side
@@ -43,3 +42,10 @@ TODOs
 - slot machine, iOS date picker roller 
 
 - tooltip, show what day number it is, and date
+
+- DONE - style text and buttons
+
+
+Typography
+- Albert Sans - Google
+- Outfit - Google

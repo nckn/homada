@@ -1,0 +1,22 @@
+$font_path: '../fonts/';
+
+// Base
+@font-face {
+  font-family: "AlbertSansBold";
+  src: url($font_path + "AlbertSans-Bold.ttf");
+}
+
+@font-face {
+  font-family: "AlbertSansRegular";
+  src: url($font_path + "AlbertSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: "OutfitBold";
+  src: url($font_path + "Outfit-Bold.ttf");
+}
+
+@font-face {
+  font-family: "OutfitRegular";
+  src: url($font_path + "Outfit-Regular.ttf");
+}

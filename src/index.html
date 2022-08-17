@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Playground - Shader</title>
+  <title>How many days have you lived?</title>
 </head>
 
 <body>
@@ -12,13 +12,66 @@
   <div class="webglContainer" id="webglContainer"></div>
 
   <div class="intro-screen">
-    <h1>How many days are you?</h1>
+    <h1>How many days have you lived?</h1>
 
     <form id="tell-me">
       <fieldset>
         <legend>
-          <p>What's your birthday?</p>
+          <p>Put in your birthday</p>
         </legend>
+
+        <label for="mm">Month</label>
+        <select id="mm">
+          <option disabled>MM</option>
+          <option value="01" selected>01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
+
+        <label for="dd">Day</label>
+        <select id="dd">
+          <option disabled selected>DD</option>
+          <option value="01" selected>01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+          <option value="24">24</option>
+          <option value="25">25</option>
+          <option value="26">26</option>
+          <option value="27">27</option>
+          <option value="28">28</option>
+          <option value="29">29</option>
+          <option value="30">30</option>
+          <option value="31">31</option>
+        </select>
 
         <label for="yy">Year</label>
         <select id="yy">
@@ -109,62 +162,10 @@
           <option value="1952">1940</option>
         </select>
 
-        <label for="mm">Month</label>
-        <select id="mm">
-          <option disabled>MM</option>
-          <option value="01" selected>01</option>
-          <option value="02">02</option>
-          <option value="03">03</option>
-          <option value="04">04</option>
-          <option value="05">05</option>
-          <option value="06">06</option>
-          <option value="07">07</option>
-          <option value="08">08</option>
-          <option value="09">09</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
-        </select>
-
-        <label for="dd">Day</label>
-        <select id="dd">
-          <option disabled selected>DD</option>
-          <option value="01" selected>01</option>
-          <option value="02">02</option>
-          <option value="03">03</option>
-          <option value="04">04</option>
-          <option value="05">05</option>
-          <option value="06">06</option>
-          <option value="07">07</option>
-          <option value="08">08</option>
-          <option value="09">09</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
-          <option value="13">13</option>
-          <option value="14">14</option>
-          <option value="15">15</option>
-          <option value="16">16</option>
-          <option value="17">17</option>
-          <option value="18">18</option>
-          <option value="19">19</option>
-          <option value="20">20</option>
-          <option value="21">21</option>
-          <option value="22">22</option>
-          <option value="23">23</option>
-          <option value="24">24</option>
-          <option value="25">25</option>
-          <option value="26">26</option>
-          <option value="27">27</option>
-          <option value="28">28</option>
-          <option value="29">29</option>
-          <option value="30">30</option>
-          <option value="31">31</option>
-        </select>
       </fieldset>
 
-      <input id="submit-btn" class="button_text" type="submit" name="submit" value="Tell me">
-      
+      <input id="submit-btn" class="button button--text" type="submit" name="submit" value="Tell me">
+
       <h2 id="result-days"></h2>
 
     </form>
