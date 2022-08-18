@@ -53,10 +53,7 @@ export default class Sketch {
     this.renderer.setPixelRatio(window.devicePixelRatio);
     // this.renderer.setPixelRatio(2);
     this.container.appendChild(this.renderer.domElement);
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.addEventListener('change', _ => {
-      // console.log('orbit controls')
-    })
+
     this.materials = [];
 
     this.time = 0;
@@ -75,12 +72,15 @@ export default class Sketch {
 
     this.setupResize()
 
+    this.orbitControls()
+    
     this.resize()
     this.render();
 
     this.addEventListeners()
 
     this.getTodaysDate()
+    
 
     setTimeout(_ => {
       this.shakeThingsUp()
@@ -180,7 +180,7 @@ export default class Sketch {
 
   addParticles() {
     let self = this
-    let min_radius = 0.5
+    let min_radius = 0.0
     let max_radius = 1
     let particlegeo = new THREE.PlaneBufferGeometry(1, 1)
     self.geo = new THREE.InstancedBufferGeometry()
@@ -390,6 +390,16 @@ export default class Sketch {
 
     this.renderer.render(this.scene, this.camera);
     requestAnimationFrame(this.render.bind(this))
+
+    this.controls.update();
+  }
+
+  orbitControls() {
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.addEventListener('change', _ => {
+      // console.log('orbit controls')
+    })
+    this.controls.enableDamping = true
   }
 
 }
