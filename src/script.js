@@ -73,7 +73,7 @@ export default class Sketch {
     this.setupResize()
 
     this.orbitControls()
-    
+
     this.resize()
     this.render();
 
@@ -84,7 +84,7 @@ export default class Sketch {
 
     setTimeout(_ => {
       this.shakeThingsUp()
-    }, 5000)
+    }, 2000)
 
   }
 
@@ -167,12 +167,15 @@ export default class Sketch {
       ], i * 3)
     }
 
-    // self.geo.setAttribute('pos', new THREE.InstancedBufferAttribute(self.pos, 3, false))
+    self.geo.setAttribute('pos', new THREE.InstancedBufferAttribute(self.pos, 3, false))
 
     // gsap.to(self.geo, { attr: { ["pos"]: new THREE.InstancedBufferAttribute(self.pos, 3, false) }});
     // gsap.to(self.geo.pos, {
     //   x: self.pos.x
     // })
+    // for (let i = 0; i < self.geo.attributes.pos.array.length; i++) {
+    //   self.geo.attributes.pos.array[i] = 0
+    // }
 
     console.log('self.geo')
     console.log(self.geo.attributes.pos.array)
