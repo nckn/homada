@@ -39,7 +39,11 @@ export default class Sketch {
 
     this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.001, 10000);
     // this.camera.position.z = this.distanceCam;
-    this.camera.position.set(0, 2, 2)
+    // this.camera.position.set(0, 2, 2)
+
+    // Initial camera position
+    // this.camera.position.set(0, 0.01, 0.3) // slightly above the ground
+    this.camera.position.set(0.198, 0.016, -0.329) // free the text clad in black
 
     // this.camera.fov = 2 * Math.atan((this.height / 2) / this.distanceCam) * 180 / Math.PI;
     this.imagesAdded = 0;
@@ -83,7 +87,7 @@ export default class Sketch {
     
 
     setTimeout(_ => {
-      this.shakeThingsUp()
+      // this.shakeThingsUp()
     }, 2000)
 
   }
@@ -129,7 +133,7 @@ export default class Sketch {
     console.log('this.today: ', this.today)
     console.log('this.birthday: ', this.birthday)
 
-    document.getElementById('result-days').innerHTML = this.differenceInDays
+    document.getElementById('result-days').innerHTML = `${this.differenceInDays} days`
 
     this.resetParticles()
   }
@@ -193,14 +197,38 @@ export default class Sketch {
 
     self.pos = new Float32Array(self.count * 3)
 
+    // // Cube
+    // let inc = 0
+    // let sides = Math.floor(Math.cbrt(self.count))
+    // for (let x = 0; x < sides; x++) {
+    //   for (let y = 0; y < sides; y++) {
+    //     for (let z = 0; z < sides; z++) {
+    //       // let theta = Math.random() * 2 * Math.PI
+
+    //       console.log(x)
+    //       console.log(y)
+    //       console.log(z)
+
+    //       // Cube
+    //       // let r = self.lerp(min_radius, max_radius, Math.random())
+    //       let xP = x * 2
+    //       let yP = y * 2
+    //       let zP = z * 2
+
+    //       self.pos.set([
+    //         xP, yP, zP
+    //       ], inc * 3)
+
+    //       inc++
+    //     }
+    //   }
+    // }
+
+    // console.log(sides)
+
+    // // Torus and random
     for (let i = 0; i < self.count; i++) {
       let theta = Math.random() * 2 * Math.PI
-
-      // Cube
-      // let r = self.lerp(min_radius, max_radius, Math.random())
-      // let x = r * Math.sin(theta)
-      // let y = (Math.random()-0.5) * 0.05
-      // let z = r * Math.cos(theta)
 
       // Disc
       let r = self.lerp(min_radius, max_radius, Math.random())
@@ -401,6 +429,7 @@ export default class Sketch {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.addEventListener('change', _ => {
       // console.log('orbit controls')
+      console.log(this.controls.object.position)
     })
     this.controls.enableDamping = true
   }
