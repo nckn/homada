@@ -17,6 +17,8 @@ import {
   noise
 } from '../static/js/helpers.js'
 
+import IosSelector from '../static/js/picker'
+
 // import vertexShader from '../static/shaders/template/vertexShader.glsl'
 // import fragmentShader from '../static/shaders/template/fragmentShader.glsl'
 import vertex from '../static/shaders/vertex.glsl'
@@ -36,6 +38,21 @@ export default class Sketch {
     this.todayDate = ''
     this.birthdayDate = ''
     this.differenceInDays = ''
+
+    // Date picker related
+    this.years = []
+    this.months = []
+    this.verbs = []
+    this.fourth = []
+    this.fifth = []
+    this.currentYear = new Date().getFullYear()
+    this.currentMonth = 1
+    this.currentDay = 1
+    this.fourthOption = 1
+    this.fifthOption = 1
+    this.firstSelector = ''
+    this.secondSelector = ''
+    this.thirdSelector = ''
 
     this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.001, 10000);
     // this.camera.position.z = this.distanceCam;
@@ -85,11 +102,53 @@ export default class Sketch {
 
     this.getTodaysDate()
     
+    this.initDatePicker()
 
     setTimeout(_ => {
       // this.shakeThingsUp()
     }, 2000)
 
+  }
+
+  initDatePicker() {
+    var self = this
+    this.sourceFirst = this.getFirst()
+    this.firstSelector = new IosSelector({
+      el: '#first',
+      type: 'infinite',
+      source: this.sourceFirst,
+      count: 20,
+      onChange: (selected) => {
+        console.log('first selector changed')
+        console.log(`value: ${JSON.stringify(selected)}`)
+        self.currentYear = selected.value
+        self.sourceThird = self.getThird(self.currentYear, self.currentMonth)
+        self.thirdSelector.updateSource(self.sourceThird)
+        // console.log(_this.firstSelector.value, _this.secondSelector.value, _this.thirdSelector.value)
+      }
+    })
+  }
+
+  getFirst() {
+    // this.years = [
+    //   {value: 0, text: 'All'},
+    //   {value: 1, text: 'One'},
+    //   {value: 2, text: 'Custom'}
+    // ]
+    // return this.years
+    this.years = []
+    // let y = new Date.getFullYear()
+    let y = 2022
+    let i = 0
+    while (y > 1920) {
+      this.years.push({
+        value: i,
+        text: y
+      })
+      i++
+      y--
+    }
+    return this.years
   }
 
   onSubmit(e) {
