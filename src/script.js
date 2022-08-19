@@ -67,7 +67,7 @@ export default class Sketch {
 
     // Initial camera position
     // this.camera.position.set(0, 0.01, 0.3) // slightly above the ground
-    
+
     // this.camera.position.set(0.198, 0.016, -0.329) // free the text clad in black
     this.camera.position.set(0.198, 0.016, -0.329) // free the text clad in black
 
@@ -110,7 +110,7 @@ export default class Sketch {
     this.addEventListeners()
 
     this.getTodaysDate()
-    
+
     this.initDatePicker()
 
     setTimeout(_ => {
@@ -210,21 +210,21 @@ export default class Sketch {
     }
     return this.years
   }
-  
+
   getMonthValues() {
     this.months = [
-      {value: 1, text: 'January'},
-      {value: 2, text: 'February'},
-      {value: 3, text: 'March'},
-      {value: 4, text: 'April'},
-      {value: 5, text: 'May'},
-      {value: 6, text: 'June'},
-      {value: 7, text: 'July'},
-      {value: 8, text: 'August'},
-      {value: 9, text: 'September'},
-      {value: 10, text: 'October'},
-      {value: 11, text: 'November'},
-      {value: 12, text: 'December'}, 
+      { value: 1, text: 'January' },
+      { value: 2, text: 'February' },
+      { value: 3, text: 'March' },
+      { value: 4, text: 'April' },
+      { value: 5, text: 'May' },
+      { value: 6, text: 'June' },
+      { value: 7, text: 'July' },
+      { value: 8, text: 'August' },
+      { value: 9, text: 'September' },
+      { value: 10, text: 'October' },
+      { value: 11, text: 'November' },
+      { value: 12, text: 'December' },
     ]
     return this.months
   }
@@ -282,7 +282,7 @@ export default class Sketch {
     // To calculate the no. of days between two dates
     this.differenceInDays = Math.floor(Difference_In_Time / (1000 * 3600 * 24));
     console.log('getDifferenceInDays: ', this.differenceInDays)
-    
+
     console.log('this.today: ', this.today)
     console.log('this.birthday: ', this.birthday)
 
@@ -307,7 +307,7 @@ export default class Sketch {
     this.count = this.differenceInDays
 
     // Flush the scene
-    while (self.scene.children.length > 0){
+    while (self.scene.children.length > 0) {
       console.log('before destroying: ', self.scene.children[0])
       self.scene.remove(self.scene.children[0]);
     }
@@ -438,6 +438,8 @@ export default class Sketch {
     document.addEventListener('mousemove', self.onMouseMove.bind(this))
     document.addEventListener('pointerdown', self.onPointerDown.bind(this))
     document.addEventListener('pointerup', self.onPointerUp.bind(this))
+
+    document.addEventListener('keyup', self.onKeyUp.bind(this))
 
     document.getElementById('tell-me').addEventListener('submit', this.onSubmit.bind(this))
     // document.getElementById('submit-btn').addEventListener('click', this.onSubmit.bind(this))
@@ -603,43 +605,43 @@ export default class Sketch {
   performRotationCalculation() {
     let self = this
     // console.log('orbit controls')
-      // console.log(this.controls.object.position)
+    // console.log(this.controls.object.position)
 
-      // self.cameraPosOld.position.clone(self.cameraPosNew)
+    // self.cameraPosOld.position.clone(self.cameraPosNew)
 
-      // self.canCloneSpin = true
+    // self.canCloneSpin = true
 
-      // Store position
-      self.cameraPosNew = new THREE.Vector3(
-        this.camera.position.x,
-        this.camera.position.y,
-        this.camera.position.z,
-      )
+    // Store position
+    self.cameraPosNew = new THREE.Vector3(
+      this.camera.position.x,
+      this.camera.position.y,
+      this.camera.position.z,
+    )
 
-      self.vectorDirection = new THREE.Vector3()
-      // self.vectorDirection.subVectors( self.cameraPosOld, self.cameraPosNew ).normalize();
-      if (self.canCloneSpin) {
-        // self.vectorDirection.subVectors( self.cameraPosNew, self.cameraPosOld ).normalize();
-        self.vectorDirection.subVectors( self.cameraPosOld, self.cameraPosNew );
-        // setTimeout(() => {
-        //   // self.vectorDirection.clone(self.cameraPosNew.sub( self.cameraPosOld ));
-        //   self.vectorDirection.subVectors( self.cameraPosOld, self.cameraPosNew );
-        // }, 10)
-        // console.log('vectorDirection: ', self.vectorDirection)
-        
-        console.log('vectorDirection x: ', self.vectorDirection.x)
-      }
+    self.vectorDirection = new THREE.Vector3()
+    // self.vectorDirection.subVectors( self.cameraPosOld, self.cameraPosNew ).normalize();
+    if (self.canCloneSpin) {
+      // self.vectorDirection.subVectors( self.cameraPosNew, self.cameraPosOld ).normalize();
+      self.vectorDirection.subVectors(self.cameraPosOld, self.cameraPosNew);
+      // setTimeout(() => {
+      //   // self.vectorDirection.clone(self.cameraPosNew.sub( self.cameraPosOld ));
+      //   self.vectorDirection.subVectors( self.cameraPosOld, self.cameraPosNew );
+      // }, 10)
+      // console.log('vectorDirection: ', self.vectorDirection)
 
-      // Store position
-      self.cameraPosOld = self.cameraPosNew
+      console.log('vectorDirection x: ', self.vectorDirection.x)
+    }
 
-      // console.log(self.cameraPosOld, self.cameraPosNew)
-      // console.log('vectorDirection: ', vectorDirection)
+    // Store position
+    self.cameraPosOld = self.cameraPosNew
 
-      // self.canCloneSpin = false
+    // console.log(self.cameraPosOld, self.cameraPosNew)
+    // console.log('vectorDirection: ', vectorDirection)
 
-      // console.log('type of: ', typeof self.cameraPosOld)
-      // console.log('type of: ', typeof self.cameraPosNew)
+    // self.canCloneSpin = false
+
+    // console.log('type of: ', typeof self.cameraPosOld)
+    // console.log('type of: ', typeof self.cameraPosNew)
   }
 
   onPointerDown() {
@@ -647,11 +649,26 @@ export default class Sketch {
     self.canCloneSpin = true
     console.log('onPointerDown')
   }
-  
+
   onPointerUp() {
     let self = this
     self.canCloneSpin = false
     console.log('onPointerUp')
+  }
+
+  onKeyUp(e) {
+    let self = this
+    // Toggle fullscreen
+    if (e.key === 'f') {
+      if (document.fullscreenElement === null) {
+        // console.log("Exited fullscreen");
+        document.documentElement.requestFullscreen()
+      }
+      else {
+        document.exitFullscreen()
+        // console.log("Entered fullscreen");
+      }
+    }
   }
 
   checkRotation() {
@@ -665,17 +682,17 @@ export default class Sketch {
     // this.camera.position.x += self.vectorDirection.x
     // this.camera.position.y += self.vectorDirection.y
     // this.camera.position.z += self.vectorDirection.z
-    
+
     // Old
     // this.camera.position.x = x * Math.cos(self.vectorDirection.x * 100.0);
     // this.camera.position.z = z * Math.cos(self.vectorDirection.z * 100.0);
 
     // console.log('vectorDirection x: ', self.vectorDirection.x)
     // if ()
-    
+
     // New Old
     let pseudoDir = 1.0
-    
+
     if (Math.sign(self.vectorDirection.x) === -1) {
       self.rotSpeed = -self.rotSpeed
       console.log('is negative')
@@ -693,11 +710,11 @@ export default class Sketch {
     // }
     this.camera.position.x = x * Math.cos(self.rotSpeed * 1.0) + z * Math.sin(self.rotSpeed * 1.0);
     this.camera.position.z = z * Math.cos(self.rotSpeed * 1.0) - x * Math.sin(self.rotSpeed * 1.0);
-    
+
     // this.camera.position.x = x * Math.cos(rotSpeed * 1.0) + z * Math.sin(rotSpeed * 1.0);
     // this.camera.position.z = z * Math.cos(rotSpeed * 1.0) - x * Math.sin(rotSpeed * 1.0);
 
-    this.camera.lookAt(new THREE.Vector3(0,0,0));
+    this.camera.lookAt(new THREE.Vector3(0, 0, 0));
   }
 
 }
