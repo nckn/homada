@@ -34,6 +34,8 @@ TODOs
 - change formations, 3D cube, 2D cube, torus, random, etc.
 - typography: Instagram research
 
+- animate picker reveal options (after and before elems)
+
 - compare people side-by-side
 - compare to Nick Cave
 
