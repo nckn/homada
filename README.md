@@ -49,3 +49,8 @@ TODOs
 Typography
 - Albert Sans - Google
 - Outfit - Google
+
+
+
+
+Ex. "cubic root of 13000"
