@@ -112,7 +112,9 @@ export default class Sketch {
 
   initDatePicker() {
     var self = this
-    this.sourceFirst = this.getFirst()
+
+    // Year
+    this.sourceFirst = this.getYearValues()
     this.firstSelector = new IosSelector({
       el: '#first',
       type: 'infinite',
@@ -127,15 +129,61 @@ export default class Sketch {
         // console.log(_this.firstSelector.value, _this.secondSelector.value, _this.thirdSelector.value)
       }
     })
+
+    // Month
+    this.sourceSecond = this.getMonthValues()
+    this.secondSelector = new IosSelector({
+      el: '#second',
+      type: 'infinite',
+      source: this.sourceSecond,
+      count: 20,
+      onChange: (selected) => {
+        console.log('second selector changed')
+        console.log(`value: ${JSON.stringify(selected)}`)
+
+        _this.currentMonth = selected.value
+        _this.sourceThird = _this.getThird(_this.currentYear, _this.currentMonth)
+        _this.thirdSelector.updateSource(_this.sourceThird)
+        // console.log(_this.firstSelector.value, _this.secondSelector.value, _this.thirdSelector.value)
+      }
+    })
   }
 
-  getFirst() {
-    // this.years = [
-    //   {value: 0, text: 'All'},
-    //   {value: 1, text: 'One'},
-    //   {value: 2, text: 'Custom'}
-    // ]
-    // return this.years
+  getYearValues() {
+    this.years = []
+    // let y = new Date.getFullYear()
+    let y = 2022
+    let i = 0
+    while (y > 1920) {
+      this.years.push({
+        value: i,
+        text: y
+      })
+      i++
+      y--
+    }
+    return this.years
+  }
+  
+  getMonthValues() {
+    this.months = [
+      {value: 0, text: 'January'},
+      {value: 1, text: 'February'},
+      {value: 2, text: 'March'},
+      {value: 3, text: 'April'},
+      {value: 4, text: 'May'},
+      {value: 5, text: 'June'},
+      {value: 6, text: 'July'},
+      {value: 7, text: 'August'},
+      {value: 8, text: 'September'},
+      {value: 9, text: 'October'},
+      {value: 10, text: 'November'},
+      {value: 11, text: 'December'}, 
+    ]
+    return this.months
+  }
+
+  getDayValues() {
     this.years = []
     // let y = new Date.getFullYear()
     let y = 2022
