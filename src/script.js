@@ -113,6 +113,15 @@ export default class Sketch {
   prepDate() {
     let self = this
     console.log(self.currentYear, '-', self.currentMonth, '-', self.currentDay)
+
+    // this.birthday = valueMonth + '-' + valueDay + '-' + valueYear
+    this.birthday = self.currentMonth + '-' + self.currentDay + '-' + self.currentYear
+    this.birthdayDate = new Date(this.birthday)
+    console.log('submit')
+
+    console.log('birthdayDate: ', this.birthdayDate)
+
+    this.getDifferenceInDays()
   }
 
   initDatePicker() {
