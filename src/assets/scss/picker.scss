@@ -158,11 +158,11 @@
         &:before {
           // animation-name: example;
           // animation-duration: 4s;
-          background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, $color-allblack 36%);
+          background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, $color-allblack 100%);
           // background: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 90%);
         }
         &:after {
-          background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 100%);
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0,0,0,1) 100%);
           // background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 90%);
         }
       }

@@ -286,7 +286,12 @@ export default class Sketch {
     console.log('this.today: ', this.today)
     console.log('this.birthday: ', this.birthday)
 
-    document.getElementById('result-days').innerHTML = `${this.differenceInDays} days`
+    if (parseInt(this.differenceInDays) === 0) {
+      document.getElementById('result-days').innerHTML = `Set birthday above`
+    }
+    else {
+      document.getElementById('result-days').innerHTML = `${this.differenceInDays} days`
+    }
 
     this.resetParticles()
   }
