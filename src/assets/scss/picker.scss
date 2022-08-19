@@ -80,7 +80,7 @@
     overflow: hidden;
     font-size: 20px;
     color: #ddd;
-    transition: background 0.25s ease !important;
+    // transition: background 0.25s ease !important;
 
     background: $color-allblack;
 
@@ -93,7 +93,7 @@
 
       height: 48%;
 
-      transition: background 0.25s ease !important;
+      // transition: background 0.25s ease !important;
     }
     &:before {
       top: 0;
@@ -102,7 +102,7 @@
 
       // background: white;
       // background: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 90%);
-      background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, $color-allblack 36%)
+      background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, $color-allblack 36%);
     }
     &:after {
       bottom: 0;
@@ -156,7 +156,9 @@
           border-bottom: 1px solid #333;
         }
         &:before {
-          background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, $color-allblack 100%)
+          // animation-name: example;
+          // animation-duration: 4s;
+          background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, $color-allblack 36%);
           // background: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 90%);
         }
         &:after {
@@ -167,3 +169,24 @@
     }
   }
 }
+
+/* The animation code */
+@keyframes example {
+  0% {
+    background-color: red;
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, $color-allblack 36%);
+  }
+  100% {
+    background-color: yellow;
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, $color-allblack 100%)
+  }
+}
+
+/* The element to apply the animation to */
+// div {
+//   width: 100px;
+//   height: 100px;
+//   background-color: red;
+//   // animation-name: example;
+//   // animation-duration: 4s;
+// }
