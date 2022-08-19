@@ -110,6 +110,11 @@ export default class Sketch {
 
   }
 
+  prepDate() {
+    let self = this
+    console.log(self.currentYear, '-', self.currentMonth, '-', self.currentDay)
+  }
+
   initDatePicker() {
     var self = this
 
@@ -123,10 +128,13 @@ export default class Sketch {
       onChange: (selected) => {
         console.log('first selector changed')
         console.log(`value: ${JSON.stringify(selected)}`)
-        self.currentYear = selected.value
-        self.sourceThird = self.getThird(self.currentYear, self.currentMonth)
+        // self.currentYear = selected.value
+        self.currentYear = parseInt(selected.text)
+        self.sourceThird = self.getDayValues(self.currentYear, self.currentMonth)
         self.thirdSelector.updateSource(self.sourceThird)
         // console.log(_this.firstSelector.value, _this.secondSelector.value, _this.thirdSelector.value)
+
+        self.prepDate()
       }
     })
 
@@ -141,10 +149,30 @@ export default class Sketch {
         console.log('second selector changed')
         console.log(`value: ${JSON.stringify(selected)}`)
 
-        _this.currentMonth = selected.value
-        _this.sourceThird = _this.getThird(_this.currentYear, _this.currentMonth)
-        _this.thirdSelector.updateSource(_this.sourceThird)
+        self.currentMonth = selected.value
+        // self.sourceThird = self.getDayValues(self.currentYear, self.currentMonth)
+        self.thirdSelector.updateSource(self.sourceThird)
         // console.log(_this.firstSelector.value, _this.secondSelector.value, _this.thirdSelector.value)
+
+        self.prepDate()
+      }
+    })
+
+    // Day
+    this.sourceThird = this.getDayValues()
+    this.thirdSelector = new IosSelector({
+      el: '#third',
+      type: 'infinite',
+      source: [],
+      count: 20,
+      onChange: (selected) => {
+        console.log('third selector changed')
+        console.log(`value: ${JSON.stringify(selected)}`)
+
+        self.currentDay = selected.value
+        // console.log(self.firstSelector.value, self.secondSelector.value, self.thirdSelector.value)
+
+        self.prepDate()
       }
     })
   }
@@ -167,36 +195,36 @@ export default class Sketch {
   
   getMonthValues() {
     this.months = [
-      {value: 0, text: 'January'},
-      {value: 1, text: 'February'},
-      {value: 2, text: 'March'},
-      {value: 3, text: 'April'},
-      {value: 4, text: 'May'},
-      {value: 5, text: 'June'},
-      {value: 6, text: 'July'},
-      {value: 7, text: 'August'},
-      {value: 8, text: 'September'},
-      {value: 9, text: 'October'},
-      {value: 10, text: 'November'},
-      {value: 11, text: 'December'}, 
+      {value: 1, text: 'January'},
+      {value: 2, text: 'February'},
+      {value: 3, text: 'March'},
+      {value: 4, text: 'April'},
+      {value: 5, text: 'May'},
+      {value: 6, text: 'June'},
+      {value: 7, text: 'July'},
+      {value: 8, text: 'August'},
+      {value: 9, text: 'September'},
+      {value: 10, text: 'October'},
+      {value: 11, text: 'November'},
+      {value: 12, text: 'December'}, 
     ]
     return this.months
   }
 
   getDayValues() {
-    this.years = []
+    this.days = []
     // let y = new Date.getFullYear()
-    let y = 2022
-    let i = 0
-    while (y > 1920) {
-      this.years.push({
+    let y = 1
+    let i = 1
+    while (y < 32) {
+      this.days.push({
         value: i,
         text: y
       })
       i++
-      y--
+      y++
     }
-    return this.years
+    return this.days
   }
 
   onSubmit(e) {

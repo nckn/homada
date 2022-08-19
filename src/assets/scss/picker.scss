@@ -23,7 +23,7 @@
 .date-picker {
   width: 100%;
   @media screen and (min-width: 768px) {
-    width: 460px;
+    width: 360px;
   }
 }
 
@@ -82,7 +82,7 @@
     color: #ddd;
     transition: all 0.25s ease;
 
-    background: $color-black;
+    background: $color-allblack;
 
     &:before, &:after {
       position: absolute;
@@ -100,7 +100,7 @@
 
       // background: white;
       // background: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 90%);
-      background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, black 20%)
+      background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, $color-allblack 20%)
     }
     &:after {
       bottom: 0;
@@ -146,6 +146,7 @@
   //   opacity: 0;
   // }
   .picker-options {
+    
     &:hover {
       .select-wrap {
         .highlight {
