@@ -54,6 +54,12 @@ export default class Sketch {
     this.secondSelector = ''
     this.thirdSelector = ''
 
+    // Spin related
+    this.cameraPosNew = new THREE.Vector3()
+    this.cameraPosOld = new THREE.Vector3()
+    this.vectorDirection = new THREE.Vector3()
+    this.canCloneSpin = true
+
     this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.001, 10000);
     // this.camera.position.z = this.distanceCam;
     // this.camera.position.set(0, 2, 2)
@@ -424,6 +430,8 @@ export default class Sketch {
   addEventListeners() {
     let self = this
     document.addEventListener('mousemove', self.onMouseMove.bind(this))
+    document.addEventListener('pointerdown', self.onPointerDown.bind(this))
+    document.addEventListener('pointerup', self.onPointerUp.bind(this))
 
     document.getElementById('tell-me').addEventListener('submit', this.onSubmit.bind(this))
     // document.getElementById('submit-btn').addEventListener('click', this.onSubmit.bind(this))
@@ -568,18 +576,90 @@ export default class Sketch {
     this.renderer.render(this.scene, this.camera);
     requestAnimationFrame(this.render.bind(this))
 
+    // if (self.enableRotation)
+    self.checkRotation()
+
     this.controls.update();
   }
 
   orbitControls() {
+    let self = this
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
     this.controls.target = new THREE.Vector3(0, 0.15, 0);
+    // this.controls.autoRotate = true
     this.controls.addEventListener('change', _ => {
       // console.log('orbit controls')
-      console.log(this.controls.object.position)
+      // console.log(this.controls.object.position)
+
+      // Store position
+      self.cameraPosOld = self.cameraPosNew
+      // self.cameraPosOld.position.clone(self.cameraPosNew)
+
+      // self.canCloneSpin = true
+
+      // Store position
+      self.cameraPosNew = new THREE.Vector3(
+        this.camera.position.x,
+        this.camera.position.y,
+        this.camera.position.z,
+      )
+
+      self.vectorDirection = new THREE.Vector3()
+      // self.vectorDirection.subVectors( self.cameraPosOld, self.cameraPosNew ).normalize();
+      if (self.canCloneSpin) {
+        // self.vectorDirection.subVectors( self.cameraPosNew, self.cameraPosOld ).normalize();
+        self.vectorDirection.subVectors( self.cameraPosOld, self.cameraPosNew );
+        // console.log('vectorDirection: ', self.vectorDirection)
+        
+        console.log('vectorDirection x: ', self.vectorDirection.x)
+      }
+
+      // console.log(self.cameraPosOld, self.cameraPosNew)
+      // console.log('vectorDirection: ', vectorDirection)
+
+      // self.canCloneSpin = false
+
+      // console.log('type of: ', typeof self.cameraPosOld)
+      // console.log('type of: ', typeof self.cameraPosNew)
+
     })
     this.controls.enableDamping = true
+  }
+
+  onPointerDown() {
+    let self = this
+    self.canCloneSpin = true
+    console.log('onPointerDown')
+  }
+  
+  onPointerUp() {
+    let self = this
+    self.canCloneSpin = false
+    console.log('onPointerUp')
+  }
+
+  checkRotation() {
+    let self = this
+    var rotSpeed = .001
+    var x = this.camera.position.x,
+      y = this.camera.position.y,
+      z = this.camera.position.z;
+
+    // New
+    // this.camera.position.x += self.vectorDirection.x
+    // this.camera.position.y += self.vectorDirection.y
+    // this.camera.position.z += self.vectorDirection.z
+    
+    // Old
+    // this.camera.position.x = x * Math.cos(self.vectorDirection.x * 100.0);
+    // this.camera.position.z = z * Math.cos(self.vectorDirection.z * 100.0);
+    
+    // New Old
+    this.camera.position.x = x * Math.cos(rotSpeed * 1.0) + z * Math.sin(rotSpeed * 1.0);
+    this.camera.position.z = z * Math.cos(rotSpeed * 1.0) - x * Math.sin(rotSpeed * 1.0);
+
+    this.camera.lookAt(new THREE.Vector3(0,0,0));
   }
 
 }
