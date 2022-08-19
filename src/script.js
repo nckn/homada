@@ -60,6 +60,8 @@ export default class Sketch {
 
     // Initial camera position
     // this.camera.position.set(0, 0.01, 0.3) // slightly above the ground
+    
+    // this.camera.position.set(0.198, 0.016, -0.329) // free the text clad in black
     this.camera.position.set(0.198, 0.016, -0.329) // free the text clad in black
 
     // this.camera.fov = 2 * Math.atan((this.height / 2) / this.distanceCam) * 180 / Math.PI;
@@ -571,6 +573,8 @@ export default class Sketch {
 
   orbitControls() {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+
+    this.controls.target = new THREE.Vector3(0, 0.15, 0);
     this.controls.addEventListener('change', _ => {
       // console.log('orbit controls')
       console.log(this.controls.object.position)
