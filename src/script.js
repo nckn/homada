@@ -693,14 +693,15 @@ export default class Sketch {
     // New Old
     let pseudoDir = 1.0
 
-    if (Math.sign(self.vectorDirection.x) === -1) {
-      self.rotSpeed = -self.rotSpeed
-      console.log('is negative')
-      // return true;
-    }
-    else {
-      console.log('is positive')
-    }
+    // if (Math.sign(self.vectorDirection.x) === -1) {
+    //   self.rotSpeed = -self.rotSpeed
+    //   console.log('is negative')
+    //   // return true;
+    // }
+    // else {
+    //   console.log('is positive')
+    // }
+
     // if (self.vectorDirection.x < 0) {
     //   pseudoDir = -1.0
     //   rotSpeed = -rotSpeed
